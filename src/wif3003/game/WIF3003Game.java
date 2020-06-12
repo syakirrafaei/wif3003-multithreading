@@ -44,7 +44,22 @@ public class WIF3003Game {
            y = randomNumber.nextDouble()*1000; 
            
            //We have to make sure that there are no duplicate random number
-           
+           if(coordinates.size() > 2){
+               for(int j = 0; j< coordinates.size();j++){
+                   double x1 = coordinates.get(j).getX();
+                   double y1 = coordinates.get(j).getY();
+                   for(int k = 0; k< coordinates.size(); k++){
+                        double x2 = coordinates.get(k+1).getX();
+                        double y2 = coordinates.get(k+1).getY();
+                        if(x1==x2){
+                            x = randomNumber.nextDouble()*1000; 
+                        }
+                        if(y1==y2){
+                            y = randomNumber.nextDouble()*1000;
+                        }
+                   }
+               }
+           }
           
            //Create new object of Coordinate class
            Coordinate myCoordinate = new Coordinate(x, y);

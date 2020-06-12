@@ -48,7 +48,7 @@ public class WIF3003Game {
                for(int j = 0; j< coordinates.size();j++){
                    double x1 = coordinates.get(j).getX();
                    double y1 = coordinates.get(j).getY();
-                   for(int k = 0; k< coordinates.size(); k++){
+                   for(int k = 0; k< coordinates.size()-1; k++){
                         double x2 = coordinates.get(k+1).getX();
                         double y2 = coordinates.get(k+1).getY();
                         if(x1==x2){

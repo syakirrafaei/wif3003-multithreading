@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 /**
  *
@@ -38,7 +39,11 @@ public class WIF3003Game {
         System.out.println("How many threads should be used, t ");
         t = scan.nextInt();
         
-       for(int i=0; i<n; i++) {
+        //Create an instance of ExecutorService with thread pool of size, t
+        ExecutorService executorService = Executors.newFixedThreadPool(t);
+        
+        //Looping based on the number of coordinates, n 
+        for(int i=0; i<n; i++) {
            //Generate random number from 0 to 1000
            x = randomNumber.nextDouble()*1000; 
            y = randomNumber.nextDouble()*1000; 
@@ -66,7 +71,9 @@ public class WIF3003Game {
            
            //Add the object into the ArrayList coordinates
            coordinates.add(myCoordinate);
-       }
+        } //End of loop
+        
+        
         
         coordinates.forEach(coordinate -> {
         System.out.println("The coordinate in x:" + coordinate.getX() + 

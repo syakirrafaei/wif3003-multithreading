@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,12 +21,15 @@ public class WIF3003Game {
         //Variables Initialization
         int n,m,t = 0;
         double x,y = 0;
+        Integer result = 0;
         
         //Create an instance of Scanner class
         Scanner scan = new Scanner(System.in);
         
         //Create an array list containing the coordinate objects
         List<Coordinate> coordinates = new ArrayList<>();
+        
+        List<Task> task = new ArrayList<>();
         
         //Create an instance of Random class
         Random randomNumber = new Random();
@@ -71,9 +76,33 @@ public class WIF3003Game {
            
            //Add the object into the ArrayList coordinates
            coordinates.add(myCoordinate);
+           
         } //End of loop
         
         
+        
+        /* 
+        Section 2
+        
+        This part is for the creating edges.
+        
+        */
+        
+        //Loop the number of threads.
+        for(int i=0; i<t; i++) {
+           //Create objects of tasks
+           
+                // Task 1 (coordinates)
+                // Task 1 invoke
+                
+                // Task 2 (coordinates yang updated)
+                // Task 3
+        }
+        
+        //InvokeAll of the tasks.
+        //Get all results.
+        
+
         
         coordinates.forEach(coordinate -> {
         System.out.println("The coordinate in x:" + coordinate.getX() + 

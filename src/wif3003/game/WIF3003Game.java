@@ -18,12 +18,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class WIF3003Game {
 
+    
     public static void main(String[] args) throws InterruptedException {
         
         //Variables Initialization
         int n,m,t = 0;
         double x,y = 0;
         Integer result = 0;
+        
         
         //Create an instance of Scanner class
         Scanner scan = new Scanner(System.in);
@@ -45,6 +47,13 @@ public class WIF3003Game {
         System.out.println("How many threads should be used, t ");
         t = scan.nextInt();
         
+        //Make sure that t is always less than n and t greater than 0.
+        while(t>=n && t>0) {
+            System.out.println("Please input value of t less than "+n);
+            System.out.println("How many threads should be used, t ");
+            t = scan.nextInt();
+        }
+        
         //Create an instance of ExecutorService with thread pool of size, t
         ExecutorService executorService = Executors.newFixedThreadPool(t);
         
@@ -52,25 +61,28 @@ public class WIF3003Game {
         for(int i=0; i<n; i++) {
            //Generate random n-umber from 0 to 1000
            x = randomNumber.nextDouble()*1000; 
+           x = Math.round(x * 100.0) / 100.0;
+
            y = randomNumber.nextDouble()*1000; 
+           y = Math.round(y * 100.0) / 100.0;
            
            //We have to make sure that there are no duplicate random number
-           if(coordinates.size() > 2){
-               for(int j = 0; j< coordinates.size();j++){
-                   double x1 = coordinates.get(j).getX();
-                   double y1 = coordinates.get(j).getY();
-                   for(int k = 0; k< coordinates.size()-1; k++){
-                        double x2 = coordinates.get(k+1).getX();
-                        double y2 = coordinates.get(k+1).getY();
-                        if(x1==x2){
-                            x = randomNumber.nextDouble()*1000; 
-                        }
-                        if(y1==y2){
-                            y = randomNumber.nextDouble()*1000;
-                        }
-                   }
-               }
-           }
+//           if(coordinates.size() > 2){
+//               for(int j = 0; j< coordinates.size();j++){
+//                   double x1 = coordinates.get(j).getX();
+//                   double y1 = coordinates.get(j).getY();
+//                   for(int k = 0; k< coordinates.size()-1; k++){
+//                        double x2 = coordinates.get(k+1).getX();
+//                        double y2 = coordinates.get(k+1).getY();
+//                        if(x1==x2){
+//                            x = randomNumber.nextDouble()*1000; 
+//                        }
+//                        if(y1==y2){
+//                            y = randomNumber.nextDouble()*1000;
+//                        }
+//                   }
+//               }
+//           }
           
            //Create new object of Coordinate class
            Coordinate myCoordinate = new Coordinate(x, y);
@@ -106,20 +118,30 @@ public class WIF3003Game {
         });
         
         System.out.println("");
+        System.out.println("*********************************");
+        System.out.println("Generating edges........");
         
         //Create object for class Edge.
         Edge edges = new Edge(coordinates);
         
-        //Run 5 tasks.
+        //The maximum no of task.
         for(int i=0; i<n/2; i++) {
-          
-           executorService.submit(() -> edges.pair());
-               
+            
+           executorService.submit(() -> edges.pair());      
         }
         
+        
+         
         //Shutdown the executor service.
         executorService.shutdown();
-        executorService.awaitTermination(600, TimeUnit.SECONDS);
+        try{
+            if(!executorService.awaitTermination(t , TimeUnit.SECONDS)) {
+                System.out.println("SHUTDOWN IMMEDIATELY BECAUSE OF TIMEOUT!");
+                executorService.shutdownNow();
+            }
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         
         //Create a new array list to store the updated coordinates.
         List<Coordinate> newCoordinates = edges.getCoordinates();

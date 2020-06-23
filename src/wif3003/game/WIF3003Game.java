@@ -4,6 +4,7 @@ package wif3003.game;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -22,7 +23,8 @@ public class WIF3003Game {
     public static void main(String[] args) throws InterruptedException {
         
         //Variables Initialization
-        int n,m,t = 0;
+        int n = 0;
+        int m,t = 0;
         double x,y = 0;
         Integer result = 0;
         
@@ -37,22 +39,63 @@ public class WIF3003Game {
         //Create an instance of Random class
         Random randomNumber = new Random();
         
-        //Getting inputs from user
-        System.out.println("Please enter the number of coordinate, n: ");
-        n = scan.nextInt();
+        //Error handling
+        try {
+            //Getting inputs from user
+            System.out.println("Please enter the number of coordinate, n: ");
+            n = scan.nextInt();
+
+            while(n<1){
+                System.out.println("Please enter the number of coordinate, n BIGGER THAN 0: ");
+                n = scan.nextInt(); 
+            }
+        }
+        catch (InputMismatchException ex) // If exception, try again.
+        {
+            System.out.println("Invalid input! You have to enter a number...restarting the program\n");
+            main(args);
+            
+        }
         
-        System.out.println("How long will the program run in seconds, m: ");
-        m = scan.nextInt();
+        try {
+             System.out.println("How long will the program run in seconds, m: ");
+             m = scan.nextInt();
+
+            while(m<1){
+                System.out.println("How long will the program run in seconds, m BIGGER THAN 0: ");
+                m = scan.nextInt(); 
+            }
+        }
+        catch (InputMismatchException ex) // If exception, try again.
+        {
+            System.out.println("Invalid input! You have to enter a number...restarting the program\n");
+            main(args);
+            
+        }
         
-        System.out.println("How many threads should be used, t ");
-        t = scan.nextInt();
-        
-        //Make sure that t is always less than n and t greater than 0.
-        while(t>=n && t>0) {
-            System.out.println("Please input value of t less than "+n);
+        try {
             System.out.println("How many threads should be used, t ");
             t = scan.nextInt();
+
+            //Make sure that t is always less than n and t greater than 0.
+            while(t>=n && t>0) {
+                System.out.println("Please input value of t less than "+n);
+                System.out.println("How many threads should be used, t ");
+                t = scan.nextInt();
+            }
         }
+        catch (InputMismatchException ex) // If exception, try again.
+        {
+            System.out.println("Invalid input! You have to enter a number...restarting the program\n");
+            main(args);
+            
+        }
+       
+        
+        
+        
+        
+        
         
         //Create an instance of ExecutorService with thread pool of size, t
         ExecutorService executorService = Executors.newFixedThreadPool(t);
@@ -67,22 +110,22 @@ public class WIF3003Game {
            y = Math.round(y * 100.0) / 100.0;
            
            //We have to make sure that there are no duplicate random number
-//           if(coordinates.size() > 2){
-//               for(int j = 0; j< coordinates.size();j++){
-//                   double x1 = coordinates.get(j).getX();
-//                   double y1 = coordinates.get(j).getY();
-//                   for(int k = 0; k< coordinates.size()-1; k++){
-//                        double x2 = coordinates.get(k+1).getX();
-//                        double y2 = coordinates.get(k+1).getY();
-//                        if(x1==x2){
-//                            x = randomNumber.nextDouble()*1000; 
-//                        }
-//                        if(y1==y2){
-//                            y = randomNumber.nextDouble()*1000;
-//                        }
-//                   }
-//               }
-//           }
+           if(coordinates.size() > 2){
+               for(int j = 0; j< coordinates.size();j++){
+                   double x1 = coordinates.get(j).getX();
+                   double y1 = coordinates.get(j).getY();
+                   for(int k = 0; k< coordinates.size()-1; k++){
+                        double x2 = coordinates.get(k+1).getX();
+                        double y2 = coordinates.get(k+1).getY();
+                        if(x1==x2){
+                            x = randomNumber.nextDouble()*1000; 
+                        }
+                        if(y1==y2){
+                            y = randomNumber.nextDouble()*1000;
+                        }
+                   }
+               }
+           }
           
            //Create new object of Coordinate class
            Coordinate myCoordinate = new Coordinate(x, y);

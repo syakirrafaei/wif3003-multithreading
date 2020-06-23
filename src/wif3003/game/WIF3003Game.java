@@ -109,21 +109,17 @@ public class WIF3003Game {
            y = randomNumber.nextDouble()*1000; 
            y = Math.round(y * 100.0) / 100.0;
            
+           Coordinate newAdded = new Coordinate(x, y);
            //We have to make sure that there are no duplicate random number
-           if(coordinates.size() > 2){
-               for(int j = 0; j< coordinates.size();j++){
-                   double x1 = coordinates.get(j).getX();
-                   double y1 = coordinates.get(j).getY();
-                   for(int k = 0; k< coordinates.size()-1; k++){
-                        double x2 = coordinates.get(k+1).getX();
-                        double y2 = coordinates.get(k+1).getY();
-                        if(x1==x2){
-                            x = randomNumber.nextDouble()*1000; 
-                        }
-                        if(y1==y2){
-                            y = randomNumber.nextDouble()*1000;
-                        }
-                   }
+           if(coordinates.size()>2) {
+               while(coordinates.contains(newAdded)) {
+                   System.out.println("Duplicate coordinate is found..generating a new one.");
+                    x = randomNumber.nextDouble()*1000; 
+                    x = Math.round(x * 100.0) / 100.0;
+
+                    y = randomNumber.nextDouble()*1000; 
+                    y = Math.round(y * 100.0) / 100.0;
+                    newAdded = new Coordinate(x, y);
                }
            }
           

@@ -50,7 +50,7 @@ public class WIF3003Game {
         
         //Looping based on the number of coordinates, n 
         for(int i=0; i<n; i++) {
-           //Generate random number from 0 to 1000
+           //Generate random n-umber from 0 to 1000
            x = randomNumber.nextDouble()*1000; 
            y = randomNumber.nextDouble()*1000; 
            
@@ -95,18 +95,24 @@ public class WIF3003Game {
         
         
         */
+        System.out.println("");
         
         //Original Coordinates.
+        int[] iarr = {0};
         coordinates.forEach(coordinate -> {
-        System.out.println("The coordinate in x:" + coordinate.getX() + 
+        System.out.println("The coordinate in index "+iarr[0]+" x:" + coordinate.getX() + 
                 " and y:" + coordinate.getY());
+        iarr[0]++;
         });
+        
+        System.out.println("");
         
         //Create object for class Edge.
         Edge edges = new Edge(coordinates);
         
         //Run 5 tasks.
         for(int i=0; i<5; i++) {
+          
            executorService.submit(() -> edges.pair());
                
         }
@@ -122,18 +128,31 @@ public class WIF3003Game {
         List<String> indexPaired = edges.getIndexPaired();
         
         //Print
+        System.out.println("");
+        
         indexPaired.forEach(coordinate -> {
         System.out.println(coordinate);
         });
+        
+        System.out.println("");
+        
+        
+        //Check coordinate 0
+        System.out.println("Coordinate at index 0 should be : "+coordinates.get(0).getX()+" , "+coordinates.get(0).getY());
         
         //Print the count
         System.out.println("Count: "+edges.getCount());
          
        
-        newCoordinates.forEach(coordinate -> {
-        System.out.println("The coordinate in x:" + coordinate.getX() + 
-                " and y:" + coordinate.getY());
-        });
+//        System.out.println("\nUpdated coordinates");
+        
+      
+//        int[] iarr = {0};
+//        newCoordinates.forEach(coordinate -> {  
+//        System.out.println("The coordinate in index "+iarr[0]+" x:" + coordinate.getX() + 
+//                " and y:" + coordinate.getY());
+//        iarr[0]++;
+//        });
         
        
     }

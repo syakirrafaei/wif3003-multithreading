@@ -56,11 +56,7 @@ public class Edge implements Runnable {
         }
         usedIndex.add(index2);
         
-//        
-//        //Unset the index
-//        coordinates.remove(index);
-//        coordinates.remove(index2);
-//        
+
         x1 = coordinates.get(index).getX();
         y1 = coordinates.get(index).getY();
         
@@ -68,7 +64,7 @@ public class Edge implements Runnable {
         y2 = coordinates.get(index2).getY();
         
         //Add  as a string to the array list indexPaired
-         indexPaired.add("("+x1+","+y1+" paired with "+x2+","+y2+")");
+         indexPaired.add("("+x1+","+y1+" ----------------- "+x2+","+y2+")");
 //         indexPaired.add("("+index+" , "+index2+")");
         
         //Increment the count

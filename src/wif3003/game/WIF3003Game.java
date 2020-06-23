@@ -111,7 +111,7 @@ public class WIF3003Game {
         Edge edges = new Edge(coordinates);
         
         //Run 5 tasks.
-        for(int i=0; i<5; i++) {
+        for(int i=0; i<n/2; i++) {
           
            executorService.submit(() -> edges.pair());
                
@@ -130,30 +130,19 @@ public class WIF3003Game {
         //Print
         System.out.println("");
         
-        indexPaired.forEach(coordinate -> {
-        System.out.println(coordinate);
+        indexPaired.forEach(paired -> {
+            System.out.println(paired);
         });
         
         System.out.println("");
         
         
-        //Check coordinate 0
-        System.out.println("Coordinate at index 0 should be : "+coordinates.get(0).getX()+" , "+coordinates.get(0).getY());
+      
         
         //Print the count
         System.out.println("Count: "+edges.getCount());
          
-       
-//        System.out.println("\nUpdated coordinates");
-        
-      
-//        int[] iarr = {0};
-//        newCoordinates.forEach(coordinate -> {  
-//        System.out.println("The coordinate in index "+iarr[0]+" x:" + coordinate.getX() + 
-//                " and y:" + coordinate.getY());
-//        iarr[0]++;
-//        });
-        
+
        
     }
     

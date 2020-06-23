@@ -2,6 +2,7 @@ package wif3003.game;
 
 
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -16,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class WIF3003Game {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         
         //Variables Initialization
         int n,m,t = 0;
@@ -29,7 +31,6 @@ public class WIF3003Game {
         //Create an array list containing the coordinate objects
         List<Coordinate> coordinates = new ArrayList<>();
         
-        List<Task> task = new ArrayList<>();
         
         //Create an instance of Random class
         Random randomNumber = new Random();
@@ -84,31 +85,55 @@ public class WIF3003Game {
         /* 
         Section 2
         
+        
+        
+        
         This part is for the creating edges.
+        
+        
+        
+        
         
         */
         
-        //Loop the number of threads.
-        for(int i=0; i<t; i++) {
-           //Create objects of tasks
-           
-                // Task 1 (coordinates)
-                // Task 1 invoke
-                
-                // Task 2 (coordinates yang updated)
-                // Task 3
-        }
-        
-        //InvokeAll of the tasks.
-        //Get all results.
-        
-
-        
+        //Original Coordinates.
         coordinates.forEach(coordinate -> {
         System.out.println("The coordinate in x:" + coordinate.getX() + 
                 " and y:" + coordinate.getY());
         });
         
+        //Create object for class Edge.
+        Edge edges = new Edge(coordinates);
+        
+        //Run 5 tasks.
+        for(int i=0; i<5; i++) {
+           executorService.submit(() -> edges.pair());
+               
+        }
+        
+        //Shutdown the executor service.
+        executorService.shutdown();
+        executorService.awaitTermination(600, TimeUnit.SECONDS);
+        
+        //Create a new array list to store the updated coordinates.
+        List<Coordinate> newCoordinates = edges.getCoordinates();
+        
+        //Create a new array list to store the index paired.
+        List<String> indexPaired = edges.getIndexPaired();
+        
+        //Print
+        indexPaired.forEach(coordinate -> {
+        System.out.println(coordinate);
+        });
+        
+        //Print the count
+        System.out.println("Count: "+edges.getCount());
+         
+       
+        newCoordinates.forEach(coordinate -> {
+        System.out.println("The coordinate in x:" + coordinate.getX() + 
+                " and y:" + coordinate.getY());
+        });
         
        
     }

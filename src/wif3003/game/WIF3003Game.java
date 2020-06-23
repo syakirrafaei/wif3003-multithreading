@@ -54,6 +54,7 @@ public class WIF3003Game {
         {
             System.out.println("Invalid input! You have to enter a number...restarting the program\n");
             main(args);
+            System.exit(0);
             
         }
         
@@ -70,6 +71,7 @@ public class WIF3003Game {
         {
             System.out.println("Invalid input! You have to enter a number...restarting the program\n");
             main(args);
+            System.exit(0);
             
         }
         
@@ -88,6 +90,7 @@ public class WIF3003Game {
         {
             System.out.println("Invalid input! You have to enter a number...restarting the program\n");
             main(args);
+            System.exit(0);
             
         }
        
